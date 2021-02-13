@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "id": "craft-mod",
+  "version": "${version}",
+
+  "name": "CraftMod",
+  "description": "Server side basic functions mod",
+  "authors": [
+    "SvenjaReissaus"
+  ],
+  "contact": {
+    "homepage": "https://svreissaus.me/",
+    "sources": "https://github.com/SvenjaReissaus/craft-mod"
+  },
+
+  "license": "CC0-1.0",
+  "icon": "assets/craft-mod/icon.png",
+
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "me.svreissaus.craft.CraftMod"
+    ]
+  },
+  "mixins": [],
+
+  "depends": {
+    "fabricloader": ">=0.7.4",
+    "fabric": "*",
+    "minecraft": "1.16.x"
+  },
+  "suggests": {
+    "another-mod": "*"
+  }
+}
