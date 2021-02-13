@@ -2,7 +2,11 @@ package me.svreissaus.craft.data;
 
 import java.io.File;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.UUID;
+
+import me.svreissaus.craft.data._data.PlayerHome;
+import me.svreissaus.craft.data._data.PlayerTeleport;
 
 public final class CraftStore {
     private Store<CraftStore> _store;
@@ -22,6 +26,6 @@ public final class CraftStore {
         return this._store.saveStore(store);
     }
 
-    public transient HashMap<UUID, UUID> tpateleports = new HashMap<UUID, UUID>();
-    public transient HashMap<UUID, UUID> tpahereteleports = new HashMap<UUID, UUID>();
+    public transient HashMap<UUID, HashSet<PlayerTeleport>> playerTeleports = new HashMap<UUID, HashSet<PlayerTeleport>>();
+    public HashMap<UUID, PlayerHome> homes = new HashMap<UUID, PlayerHome>();
 }

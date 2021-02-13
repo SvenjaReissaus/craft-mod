@@ -1,0 +1,11 @@
+{
+    "item.craftmod.command_tpa_accept": "Teleport request accepted.",
+    "item.craftmod.command_tpa_accept_hint": "Use /tpaccept or /tpyes to accept.",
+    "ttem.craftmod.command_tpa_received": "%d has sent you a teleportation request.",
+    "item.craftmod.command_tpa_sent": "Sent teleportation request to %d.",
+    "item.craftmod.command_tpa_warnings_noself": "You can't send a tpa to",
+    "item.craftmod.commands_tpaccept_tpa_done": "You have been teleported to %d",
+    "item.craftmod.commands_tpaccept_tpahere_done": "You have teleported %d",
+    "item.craftmod.commands_tpaccept_warnings_empty": "You don't have any pending requests.",
+    "item.craftmod.commands_tpaccept_warnings_offline": "The player is now offline."
+}

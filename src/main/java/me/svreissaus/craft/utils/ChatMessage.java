@@ -25,4 +25,8 @@ public final class ChatMessage {
     public void send(String message) {
         this.player.sendMessage(new TranslatableText(message), this.actionBar);
     }
+
+    public void send(String message, Object... args) {
+        this.player.sendMessage(new TranslatableText(message, args), this.actionBar);
+    }
 }
