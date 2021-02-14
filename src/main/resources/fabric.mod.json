@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "id": "craft-mod",
+  "id": "craftmod",
   "version": "${version}",
 
   "name": "CraftMod",
@@ -14,7 +14,7 @@
   },
 
   "license": "CC0-1.0",
-  "icon": "assets/craft-mod/icon.png",
+  "icon": "assets/craftmod/icon.png",
 
   "environment": "*",
   "entrypoints": {
