@@ -26,13 +26,16 @@ public final class CommandTpa {
     }
 
     public static int execute(CommandContext<ServerCommandSource> context) throws CommandSyntaxException {
-        ServerPlayerEntity player = context.getSource().getPlayer();
-        ServerPlayerEntity requestedPlayer = EntityArgumentType.getPlayer(context, "target");
-        ChatMessage chatSP = new ChatMessage(player);
-        ChatMessage chatRP = new ChatMessage(requestedPlayer);
-
-        if (requestedPlayer.getUuid() != player.getUuid()) {
-            HashSet<PlayerTeleport> teleports = data.store.playerTeleports.get(requestedPlayer.getUuid());
+        try {
+            ServerPlayerEntity player = context.getSource().getPlayer();
+            ServerPlayerEntity target = EntityArgumentType.getPlayer(context, "target");
+            ChatMessage playerChat = new ChatMessage(player);
+            ChatMessage targetChat = new ChatMessage(target);
+            if (target.getUuid() == player.getUuid()) {
+                playerChat.send("item.craftmod.command_tpa_warnings_noself");
+                return 1;
+            }
+            HashSet<PlayerTeleport> teleports = data.store.playerTeleports.get(target.getUuid());
             if (teleports != null) {
                 Optional<PlayerTeleport> current = teleports.stream().filter(c -> c.player == player.getUuid())
                         .findFirst();
@@ -42,12 +45,14 @@ public final class CommandTpa {
                 teleports = new HashSet<PlayerTeleport>();
             }
             teleports.add(new PlayerTeleport(player.getUuid(), PlayerTeleportType.TPA));
-            chatSP.send("item.craftmod.commands_tpa_sent" + requestedPlayer.getName().getString());
-            chatRP.send("item.craftmod.commands_tpa_received" + player.getName().getString());
-            chatRP.send("item.craftmod.commands_tpa_accept_hint");
-        } else {
-            chatRP.send("item.craftmod.comamnds_tpa_warnings_noself");
+            playerChat.send("item.craftmod.commands_tpa_sent", target.getName().getString());
+            targetChat.send("item.craftmod.commands_tpa_received", player.getName().getString());
+            targetChat.send("item.craftmod.commands_tpa_accept_hint");
+            data.store.playerTeleports.put(target.getUuid(), teleports);
+            return 1;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return 0;
         }
-        return 1;
     }
 }

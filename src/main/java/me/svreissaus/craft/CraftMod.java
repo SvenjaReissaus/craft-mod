@@ -1,5 +1,7 @@
 package me.svreissaus.craft;
 
+import java.io.File;
+import me.svreissaus.craft.command.CommandSpawn;
 import me.svreissaus.craft.command.CommandTpa;
 import me.svreissaus.craft.command.CommandTpaccept;
 import me.svreissaus.craft.data.CraftStore;
@@ -11,6 +13,7 @@ import net.fabricmc.loader.api.FabricLoader;
 public class CraftMod implements ModInitializer {
     public static Configuration config;
     public static CraftStore data;
+    private File modFolder = new File(FabricLoader.getInstance().getConfigDirectory(), "craftmod");
 
     @Override
     public void onInitialize() {
@@ -18,10 +21,11 @@ public class CraftMod implements ModInitializer {
         // However, some things (like resources) may still be uninitialized.
         // Proceed with mild caution.
 
-        config = new Configuration(FabricLoader.getInstance().getConfigDirectory());
-        data = new CraftStore(FabricLoader.getInstance().getConfigDirectory());
+        config = new Configuration(modFolder);
+        data = new CraftStore(modFolder);
 
         CommandRegistrationCallback.EVENT.register((dispatcher, dedicated) -> {
+            CommandSpawn.register(dispatcher);
             CommandTpa.register(dispatcher);
             CommandTpaccept.register(dispatcher);
         });

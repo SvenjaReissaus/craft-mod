@@ -5,6 +5,7 @@ import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 
 import me.svreissaus.craft.data._data.PlayerTeleport;
+import me.svreissaus.craft.data._data.PlayerTeleportType;
 import me.svreissaus.craft.utils.ChatMessage;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -26,12 +27,12 @@ public final class CommandTpaccept {
         ChatMessage chat = new ChatMessage(player);
 
         if (!data.store.playerTeleports.containsKey(player.getUuid())) {
-            chat.send("item.craftmod.commands_tpaccept_warnings_empty");
+            chat.send("item.craftmod.command_tpaccept_warnings_empty");
             return 1;
         }
         HashSet<PlayerTeleport> requests = data.store.playerTeleports.get(player.getUuid());
         if (requests.isEmpty()) {
-            chat.send("item.craftmod.commands_tpaccept_warnings_empty");
+            chat.send("item.craftmod.command_tpaccept_warnings_empty");
             return 1;
         }
         PlayerTeleport current = requests.stream().sorted(new Comparator<PlayerTeleport>() {
@@ -44,13 +45,14 @@ public final class CommandTpaccept {
         ServerPlayerEntity target = context.getSource().getMinecraftServer().getPlayerManager()
                 .getPlayer(current.player);
         if (target == null) {
-            chat.send("item.craftmod.commands_tpaccept_warnings_offline");
+            chat.send("item.craftmod.command_tpaccept_warnings_offline");
             return 1;
         }
 
         player.teleport(target.getServerWorld(), target.getPos().x, target.getPos().y, target.getPos().z, target.yaw,
                 target.pitch);
-        chat.send("item.craftmod.commands_tpaccept_tpa_done", target.getDisplayName());
+        chat.send(current.type == PlayerTeleportType.TPA ? "item.craftmod.command_tpaccept_tpa_done"
+                : "item.craftmod.command_tpaccept_tpahere_done", target.getDisplayName());
         return 1;
     }
 }
